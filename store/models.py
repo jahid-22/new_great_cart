@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
@@ -21,7 +22,7 @@ class Catagory(models.Model):
 class Product(models.Model):
     product_name    = models.CharField(max_length=200)
     slug            = models.SlugField(max_length=200)
-    description     = models.TextField(blank=True)
+    description     = RichTextField()
     price           = models.IntegerField()
     img_url         = models.CharField(max_length=400, default='image url')
     stock           = models.IntegerField()
@@ -29,7 +30,7 @@ class Product(models.Model):
     catagory        = models.ForeignKey(Catagory, on_delete=models.CASCADE)
     created_date    = models.DateTimeField(auto_now_add=True)
     modified_date   = models.DateTimeField(auto_now=True)
-    
+ 
     def get_url(self):
         return reverse('product_detail', args=[self.catagory.slug, self.slug])
     

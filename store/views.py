@@ -24,16 +24,19 @@ def product_detail (request, category_slug, product_slug):
 def store(request, category_slug=None):
     if category_slug is None:
         get_all_product = Product.objects.all().order_by('-id')
+        pagination = Paginator(get_all_product, 5)
+        page_number = request.GET.get('page')
+        page_obj = pagination.get_page(page_number)
     else:
         get_all_product = Product.objects.filter(catagory__slug=category_slug)
 
 
-    # pagination = Paginator(get_all_product, 2)
-    # page_number = request.GET.get('page')
-    # page_obj = pagination.get_page(page_number)
+        paginator = Paginator(get_all_product, 1)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
     
     context = {
-        'get_all_product' : get_all_product,
+        'get_all_product' : page_obj,
         # 'page_obj' : page_obj,
     }
     return render(request, 'store.html', context)
