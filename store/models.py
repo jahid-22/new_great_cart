@@ -41,3 +41,15 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name
 
+
+# product variation model. 
+class Product_variation(models.Model):
+    
+    product     = models.ForeignKey(Product, on_delete=models.CASCADE)
+    category    = models.CharField(max_length=30, choices=[('color', 'color'),('size', 'size')])
+    value       = models.CharField(max_length=30)
+    
+    def __unicode__(self):
+        return self.product
+    
+    

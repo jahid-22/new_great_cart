@@ -19,6 +19,10 @@
 		   <a href="#"><img src="{{single_product.img_url}}"></a>
 		</div> <!-- img-big-wrap.// -->
 		
+		<form action="{% url 'add_cart' single_product.id  %}" method="POST">
+
+			{% csrf_token %}
+
 	</article> <!-- gallery-wrap .end// -->
 			</aside>
 			<main class="col-md-6 border-left">
@@ -30,55 +34,46 @@
 		<var class="price h4">TK:{{single_product.price}}৳</var> 
 	</div> 
 	
-	<p>{{single_product.description}}</p>
+	<p>{{single_product.description | safe}}</p>
 	
 	
 	<hr>
 		<div class="row">
 			<div class="item-option-select">
 				<h6>Choose Color</h6>
-				<div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
-				  <label class="btn btn-light">
-					<input type="radio" name="radio_color"> Silver
-				  </label>
-				  <label class="btn btn-light">
-					<input type="radio" name="radio_color" > Gray
-				  </label>
-				  <label class="btn btn-light active">
-					<input type="radio" name="radio_color checked"> Gold
-				  </label>
-				  <label class="btn btn-light">
-					<input type="radio" name="radio_color"> Black
-				  </label>
-				</div> 
+				<select name="color" class="form-control" id="color">
+					<option value="" selected disabled>------</option>
+
+				{% for variation in product_variation_color %}
+					<option value="{{ variation.value  }}">{{ variation.value }}</option>
+				{% endfor %}
+					  
+				</select>
 			</div>
 		</div> <!-- row.// -->
 		<div class="row">
 			<div class="item-option-select">
 				<h6>Select Size</h6>
-				<div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
-				  <label class="btn btn-light">
-					<input type="radio" name="radio_color"> S
-				  </label>
-				  <label class="btn btn-light active">
-					<input type="radio" name="radio_color" checked> M
-				  </label>
-				  <label class="btn btn-light">
-					<input type="radio" name="radio_color"> L
-				  </label>
-				  <label class="btn btn-light">
-					<input type="radio" name="radio_color"> XL
-				  </label>
-				</div> 
+				<select name="size" class="form-control" id="color">
+					<option value="">------</option>
+					{% for variation in product_variation_size %}
+					<option value="{{ variation.value | lower }}">{{ variation.value }}</option>
+				{% endfor %}
+				</select>
 			</div>
 		</div> <!-- row.// -->
 		<hr>
 		{% if single_product.stock <= 0 %}
 		<h5 class="text-danger">Out of stock</h5>
 		{% else %}
-		<a href="{% url 'add_cart' single_product.id  %}" class="btn  btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
+		{% if already_in_cart == False %}
+		<button class="btn  btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i></button>
+		{% else %}
+		<a href="{% url 'cart' %}" class="btn  btn-primary"> <span class="text">Go to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
+		{% endif %}
 		{% endif %}
 	</article> <!-- product-info-aside .// -->
+	</form>
 			</main> <!-- col.// -->
 		</div> <!-- row.// -->
 	</div> <!-- card.// -->

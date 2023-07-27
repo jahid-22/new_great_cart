@@ -131,7 +131,7 @@
 	</header><!-- sect-heading -->
 	
 	<div class="row">
-		{% for product in get_all_product %}
+		{% for product in page_obj %}
 		<div class="col-md-4">
 			<figure class="card card-product-grid">
 				<div class="img-wrap"> 
@@ -147,7 +147,7 @@
 							<del class="price-old">$1980</del>
 						</div> <!-- price-wrap.// -->
 					</div>
-					<a href="#" class="btn btn-block btn-success">Added to cart </a>
+					<a href="{{product.get_url}}" class="btn btn-block btn-primary">Add to cart </a>
 				</figcaption>
 			</figure>
 		</div> <!-- col.// -->

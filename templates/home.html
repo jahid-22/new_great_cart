@@ -18,7 +18,7 @@
 			<div class="card card-product-grid">
 				<a href="{{product.get_url}}" class="img-wrap"> <img src="{{product.img_url}}"> </a>
 				<figcaption class="info-wrap">
-					<a href="" class="title">{{product.product_name |slice:":50"}}</a>
+					<a href="{{product.get_url}}" class="title">{{product.product_name |slice:":50"}}</a>
 					<div class="price mt-1">TK {{product.price}}</div> <!-- price-wrap.// -->
 				</figcaption>
 			</div>
